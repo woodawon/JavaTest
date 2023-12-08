@@ -4,8 +4,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SimpleSocketServer {
+	
+	static List<String> log = new ArrayList<>();
+	
 	public static void main(String[] args) {
 		final int portNumber = 9999; // 포트 번호
 
@@ -28,10 +33,16 @@ public class SimpleSocketServer {
 			String receivedMessage;
 			while ((receivedMessage = inputReader.readLine()) != null) {
 				System.out.println("클라이언트로부터 받은 메시지: " + receivedMessage);
-
+				log.add("클라이언트로부터 서버가 받은 메시지 : " + receivedMessage);
+				if(log != null) {
+					for(String value : log) {
+						System.out.println(value);
+					}
+				}
 				// 클라이언트에 응답 메시지 전송
 				String responseMessage = "서버가 메시지를 받았습니다.";
 				outputWriter.println(responseMessage);
+				
 
 				// 특정 키 체크 ("exit" 입력 시 연결 종료)
 				if ("exit".equals(receivedMessage)) {
